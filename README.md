@@ -1,6 +1,6 @@
 # fox
 
-ANSI-compiant C89 compiler for STM32
+ANSI-compliant C89 compiler for STM32
 
 # Roadmap
 
@@ -8,7 +8,7 @@ ANSI-compiant C89 compiler for STM32
 - [ ] Preprocessing
 - [ ] Lexing
 - [ ] Parsing
-- [ ] IR Generation
+- [ ] IR construction
 - [ ] Optimizations (optional)
 - [ ] Assembler
 - [ ] Linker
