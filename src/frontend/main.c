@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "error.h"
-#include "preproc.h"
+#include "preprocessor/error.h"
+#include "preprocessor/preproc.h"
+
+#include "lexer/includes/lexer.h"
 
 int main(int argc, char **argv) {
    if (argc < 2) {
@@ -28,11 +30,13 @@ int main(int argc, char **argv) {
       goto close_file;
    }
 
-   char *buf = malloc(size);
+   // Note: adjusted "buf" to be null-terminated
+   char *buf = malloc(size + 1);
    if (buf == NULL) {
       perrorf("failed to allocate %ld bytes for file", size);
       goto close_file;
    }
+   buf[size] = '\0';
 
    if (fseek(file, 0L, SEEK_SET) != 0) {
       perror("fseek set failed");
@@ -47,8 +51,11 @@ int main(int argc, char **argv) {
 
    preprocess(buf, size);
 
+   
+
 free_buffer:
    free(buf);
+   return errno;
 
 close_file:
    fclose(file);

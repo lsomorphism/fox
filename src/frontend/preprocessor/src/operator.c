@@ -1,4 +1,4 @@
-#include "operator.h"
+#include "../includes/operator.h"
 
 const char *operator_to_str(Operator op) {
    switch (op) {

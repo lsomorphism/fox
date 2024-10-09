@@ -1,3 +1,4 @@
+# idk cmake, adjust to new project layout
 add_executable(fox
   chars.h
   main.c
@@ -11,3 +12,4 @@ add_executable(fox
 
 set_property(TARGET fox PROPERTY C_STANDARD 11)
 target_compile_definitions(fox PRIVATE _CRT_SECURE_NO_WARNINGS)
+

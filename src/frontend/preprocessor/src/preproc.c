@@ -1,12 +1,14 @@
-#include "preproc.h"
+// This looks more like a lexer than a preprocess??? rewrote lexer in "../lexer/src/lexer"
+
+#include "../includes/preproc.h"
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "chars.h"
-#include "operator.h"
+#include "../includes/chars.h"
+#include "../includes/operator.h"
 
 typedef enum {
    ERR_EOF,
