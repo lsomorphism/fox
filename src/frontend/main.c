@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "preprocessor/error.h"
-#include "preprocessor/preproc.h"
+#include "preprocessor/includes/error.h"
+#include "preprocessor/includes/preproc.h"
 
 #include "lexer/includes/lexer.h"
 
