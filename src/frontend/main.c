@@ -51,13 +51,11 @@ int main(int argc, char **argv) {
 
    preprocess(buf, size);
 
-   
-
 free_buffer:
    free(buf);
-   return errno;
 
 close_file:
    fclose(file);
    return errno;
 }
+

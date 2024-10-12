@@ -5,7 +5,7 @@
 #include "../../shared_utils/hashmap.h"
 
 // Keyword hashmap construction:
-DECL_HASHMAP(keyword_map, const char *, token_kind_t);
+DECL_HASHMAP(keyword_map, const char *, token_kind_t)
 bool make_keyword_map(keyword_map *);
 
 // Specialized functions for hashmap construction:

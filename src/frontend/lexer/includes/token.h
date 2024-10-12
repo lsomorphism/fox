@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 // C token kinds
 typedef enum {
@@ -119,14 +120,14 @@ typedef enum {
     TOKEN_EOF, // End of File
 } token_kind_t;
 
+typedef struct {
+    size_t start, end;
+} span_t;
+
 // Token representation, contains lexeme + token kind
 typedef struct {
     token_kind_t kind;
-
-    struct {
-        char *lexeme;
-        size_t lexeme_len;
-    } lexeme;
+    span_t lexeme;
 } token_t;
 
 // Stringification of kind for logging
@@ -134,6 +135,9 @@ const char *kind_to_str(token_kind_t);
 
 // Comparer function for tokens
 bool are_tokens_equal(token_t, token_t);
+
+// Print token function
+void print_token(token_t);
 
 #endif
 

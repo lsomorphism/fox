@@ -35,12 +35,12 @@ typedef struct {
 } lexer_t;
 
 // Lookahead functionalities:
-static char next(lexer_t *);
-static char peek_next(lexer_t *);
+static char next_char(lexer_t *);
+static char peek_next_char(lexer_t *);
 
-// Main lexing functionailties
+// Lexing functionailties
 static token_t lex_single_char(lexer_t *, char);
-static token_t lex_multi_char(lexer_t *, token_kind_t, char *, token_kind_t *, size_t, size_t);
+static token_t lex_simple_multi_char(lexer_t *, token_kind_t, char *, token_kind_t *, size_t);
 
 // Lexing literals
 static token_t lex_int_lit(lexer_t *);
@@ -50,8 +50,10 @@ lexer_t new_lexer(char *, size_t);
 void delete_lexer(lexer_t *);
 
 // Lexing function
-DECL_RESULT(lexing_result, token_vec, lexer_error_vec)
-lexing_result tokenize(lexer_t *);
+bool tokenize(lexer_t *, token_vec *);
+
+// Utility / debuggin
+void print_tokens(token_vec);
 
 #endif
 

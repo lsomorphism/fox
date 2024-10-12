@@ -29,8 +29,8 @@ bool are_strs_equal(const char *key_1, const char *key_2) {
 }
 
 // neither are dynamically allocated
-void free_str(const char * _) {}
-void free_token(token_kind_t _) {}
+void free_str(const char * _)   { (void) _;}
+void free_token(token_kind_t _) { (void) _;}
 
 DEFINE_HASHMAP(keyword_map, const char *, token_kind_t, calc_str_hash, are_strs_equal, free_str, free_token)
 

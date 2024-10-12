@@ -65,7 +65,7 @@ int main(void) {
     } NAME;                                                                                                 \
                                                                                                             \
     bool new_##NAME(NAME *);                                                                                \
-    bool NAME##_reserve(NAME *, size_t);                                                                    \
+    bool new_##NAME##_with(NAME *, size_t);                                                                 \
     bool NAME##_insert(NAME *, T);                                                                          \
     size_t NAME##_get(const NAME *, T, bool (*)(T, T));                                                     \
     void NAME##_printer(const NAME *vec, void (*)(T));                                                      \
@@ -93,15 +93,15 @@ int main(void) {
         return true;                                                                                        \
     }                                                                                                       \
                                                                                                             \
-    bool NAME##_reserve(NAME *vec, size_t cap) {                                                            \
-                if(!vec) {                                                                                  \
-            fprintf(stderr, "[in new_%s()]: invalid vector state!\n", #NAME);                               \
+    bool new_##NAME##_with(NAME *vec, size_t cap) {                                                         \
+        if(!vec) {                                                                                          \
+            fprintf(stderr, "[in %s_reserve()]: invalid vec state!\n", #NAME);                              \
             return false;                                                                                   \
         }                                                                                                   \
                                                                                                             \
         T *vec_data = malloc(cap * sizeof(*vec_data));                                                      \
         if(!vec_data) {                                                                                     \
-            fprintf(stderr, "[in new_%s()]: failure to allocate internal array!\n", #NAME);                 \
+            fprintf(stderr, "[in %s_reserve()]: failure to allocate internal array!\n", #NAME);             \
             return false;                                                                                   \
         }                                                                                                   \
                                                                                                             \
@@ -115,7 +115,7 @@ int main(void) {
     }                                                                                                       \
                                                                                                             \
     bool NAME##_insert(NAME *vec, T data) {                                                                 \
-        if(!vec || !vec->vec_data || !vec->vec_cap) {                                                       \
+        if(!vec || !vec->vec_data) {                                                                        \
            fprintf(stderr, "[in %s_insert()]: invalid vector state!\n", #NAME);                             \
            return false;                                                                                    \
         }                                                                                                   \
@@ -128,7 +128,6 @@ int main(void) {
                 fprintf(stderr, "[in %s_insert()]: failure to resize internal array in vector!\n", #NAME);  \
                 return false;                                                                               \
            }                                                                                                \
-                                                                                                            \
         }                                                                                                   \
                                                                                                             \
         vec->vec_data[vec->vec_len] = data;                                                                 \
@@ -169,7 +168,7 @@ int main(void) {
                                                                                                             \
         return true;                                                                                        \
     }                                                                                                       \
-        
+    
 /* == OLD CODE == */
 
 /*
@@ -222,5 +221,4 @@ static inline int vector_reserve(Vector *vec, size_t addtl_size) {
 */
 
 #endif // !FOX_VECTOR_H_
-
 
