@@ -21,6 +21,9 @@ DECL_VEC(const char *, lexer_error_vec)
 
 // TODO: Add support for string interning
 typedef struct {
+    char *path;
+    size_t ln_num;
+    
     char *program;
     size_t program_cursor, program_len;
 
@@ -46,7 +49,7 @@ static token_t lex_simple_multi_char(lexer_t *, token_kind_t, char *, token_kind
 static token_t lex_int_lit(lexer_t *);
 
 // Initialization & Deinitialization
-lexer_t new_lexer(char *, size_t);
+lexer_t new_lexer(char *);
 void delete_lexer(lexer_t *);
 
 // Lexing function

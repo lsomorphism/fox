@@ -1,8 +1,7 @@
-#include <stdlib.h>
-#include <string.h>
 #include "../includes/lexer.h"
 #include "../includes/token.h"
 #include "../includes/keyword.h"
+#include "../includes/utils.h"
 
 /* == Helper / preliminary functions for the lexer to use ==*/
 
@@ -69,7 +68,15 @@ static void handle_multiline_comment(lexer_t *lexer) {
 
 /* == Public lexer interface == */
 
-lexer_t new_lexer(char *program, size_t program_len) {
+lexer_t new_lexer(char *path) {
+    char *program = read_file_contents(path);
+    if(!program) {
+        FATAL_ERR_FMT("Lexer", "Invalid path: %s! Make sure it exists!", path);
+        return (lexer_t) {0}; // unreachable
+    }
+    
+    size_t program_len = strlen(program);
+
     if(!program || !(*program)) {
         FATAL_ERR("Lexer", "Provided invalid program!");
         return (lexer_t) {0}; // unreachable
@@ -94,6 +101,9 @@ lexer_t new_lexer(char *program, size_t program_len) {
     }
 
     return (lexer_t) {
+        .path = path,
+        .ln_num = 1,
+    
         .program = program,
         .program_len = program_len,
         .program_cursor = 0,
@@ -153,7 +163,9 @@ bool tokenize(lexer_t *lexer, token_vec *tokens) {
     }
 
     for(; lexer->program[lexer->program_cursor]; ++lexer->program_cursor) {
-        switch(lexer->program[lexer->program_cursor]) {            
+        char curr_char = lexer->program[lexer->program_cursor];
+        
+        switch(curr_char) {            
             // Arithmetic binary operator lexing:
             case '+': {
                 token_t token = lex_simple_multi_char(lexer, TOKEN_PLUS, (char []){'+', '='}, (token_kind_t []){TOKEN_INC, TOKEN_PLUS_ASSIGN}, 2);
@@ -194,6 +206,8 @@ bool tokenize(lexer_t *lexer, token_vec *tokens) {
                 token_vec_insert(&lexer->tokens, token);
                 break;
             }
+
+            default: fprintf(stderr, "Unexpected token character: '%c' in %s:%ld", curr_char, lexer->path, lexer->ln_num); break;
         }
     }
 
